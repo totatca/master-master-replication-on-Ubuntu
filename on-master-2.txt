@@ -1,0 +1,20 @@
+bind-address 	= IP-of-Master-Server-2
+server-id		= 2
+report_host	= Hostname-of-Master-Server-2
+log_bin		= /var/log/mysql/mariadb-bin
+log_bin_index	= /var/log/mysql/mariadb-bin.index
+relay_log		= /var/log/mysql/relay-bin
+relay_log_index	= /var/log/mysql/relay-bin.index
+
+
+	CREATE USER 'rep_user'@'%' IDENTIFIED BY 'Your-Passwd';
+
+
+	GRANT REPLICATION SLAVE ON *.* TO 'rep_user'@'%';
+
+CHANGE MASTER TO 
+MASTER_HOST='IP-of-Server-1', 
+MASTER_USER='rep_user', 
+MASTER_PASSWORD='Your-Passwd', 
+MASTER_LOG_FILE='log_file_of_master-1', 
+MASTER_LOG_POS=log_pos_of_master-1;
